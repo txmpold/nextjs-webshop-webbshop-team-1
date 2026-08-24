@@ -5,13 +5,11 @@
   "license": "ISC",
   "private": true,
   "scripts": {
-    "postinstall": "plugga init && prisma db push",
     "dev": "next dev --turbopack --port 5173",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "update": "plugga update",
-    "test": "plugga test",
     "push": "prisma db push",
     "seed": "prisma db seed",
     "studio": "prisma studio"
@@ -49,12 +47,10 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
-    "@plugga-tech/react-webshop-ts": "^1.2.1",
     "@prisma/client": "^6.19.3",
     "@types/node": "^24.3.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "cypress": "^15.14.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.2",
     "prettier": "^3.8.3",
@@ -69,5 +65,13 @@
   "bugs": {
     "url": "https://github.com/plugga-tech/react-webshop-ts-template-nextjs/issues"
   },
-  "homepage": "https://github.com/plugga-tech/react-webshop-ts-template-nextjs#readme"
+  "homepage": "https://github.com/plugga-tech/react-webshop-ts-template-nextjs#readme",
+  "allowScripts": {
+    "@prisma/client@6.19.3": true,
+    "@prisma/engines@6.19.3": true,
+    "esbuild@0.27.2": true,
+    "msw@2.13.5": true,
+    "prisma@6.19.3": true,
+    "unrs-resolver@1.11.1": true
+  }
 }
