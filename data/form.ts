@@ -41,6 +41,13 @@ export const productSchema = z.object({
       const parsed = Number(val);
       return !Number.isNaN(parsed) && parsed > 0;
     }, "Invalid price"),
+  stock: z
+    .string()
+    .min(1, "Required")
+    .refine((val) => {
+      const parsed = Number(val);
+      return Number.isInteger(parsed) && parsed >= 0;
+    }, "Stock must be a whole number of 0 or more"),
   articleNumber: z.string().optional(),
   slug: z.string().optional(),
 });
