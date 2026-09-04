@@ -9,16 +9,6 @@ datasource db {
   provider = "sqlite"
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String
-  role      String   @default("customer")
-  createdAt DateTime @default(now())
-  orders    Order[]
-}
-
 model Category {
   id          String    @id @default(cuid())
   name        String    @unique
@@ -67,8 +57,7 @@ model Order {
 }
 
 model OrderItem {
-  id        String @id @default(cuid())
-  order     Order  @relation(fields: [orderId], references: [id])
+  id        String   @id @default(cuid())
   orderId   String
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId String?
@@ -88,6 +77,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  orders        Order[]
 
   @@unique([email])
   @@map("user")
