@@ -4,14 +4,10 @@ import { db } from "@/prisma/db";
 import Link from "next/link";
 
 export default async function Home() {
-  const product = await db.product.findMany({});
-  const categories = ["Tops", "Bottoms", "Shoes", "Accessories"];
-  const categoryImages: Record<string, string> = {
-    Tops: "/assets/images/top-1.jpg",
-    Bottoms: "/assets/images/bottom-1.jpg",
-    Shoes: "/assets/images/shoe-1.jpg",
-    Accessories: "/assets/images/accessory-1.jpg",
-  };
+  const [products, categories] = await Promise.all([
+    db.product.findMany(),
+    db.category.findMany({ orderBy: { name: "asc" } }),
+  ]);
 
   return (
     <main className="grid gap-8 place-items-center">
@@ -34,21 +30,18 @@ export default async function Home() {
       <h2 className="text-2xl md:text-4xl md:p-4">Shop by Category</h2>
       <section className="w-full flex justify-evenly gap-8 overflow-x-auto p-2">
         {categories.map((category) => (
-          <Link href={`/product?category=${category}`} key={category}>
-            <CategoryCard
-              category={category}
-              image={categoryImages[category]}
-            />
+          <Link href={`/product?category=${category.slug}`} key={category.id}>
+            <CategoryCard category={category.name} image={category.image} />
           </Link>
         ))}
       </section>
       <section className="grid gap-8 place-items-center">
         <h2 className="text-xl md:text-3xl font-bold m-4">All Products</h2>
         <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-2 mb-4">
-          {product.map((product) => (
+          {products.map((product) => (
             <HomePageCard
               key={product.id}
-              id={product.id.toString()}
+              id={product.id}
               title={product.title}
               articleNumber={product.articleNumber}
               price={product.price}
