@@ -19,8 +19,6 @@ export default function AddToCartButton({
   imageUrl,
   price,
   slug,
-  category,
-  description,
   buttonText,
   variant,
   size,
@@ -36,8 +34,6 @@ export default function AddToCartButton({
       image: imageUrl,
       price,
       slug,
-      category,
-      description,
       quantity: 1,
     });
     toast.success(

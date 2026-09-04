@@ -10,32 +10,69 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("customer")
+  createdAt DateTime @default(now())
+  orders    Order[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  products    Product[]
+}
+
 model Product {
-  id            String  @id @default(cuid())
-  slug          String  @unique
-  category      String?
-  articleNumber String  @unique
+  id            String      @id @default(cuid())
+  articleNumber String      @unique
+  slug          String      @unique
   title         String
   description   String
   image         String
   price         Float
+  stock         Int         @default(1)
+  condition     String      @default("Okänt")
+  type          String      @default("merch")
+  releaseYear   Int?
+  platform      String?
+  issueNumber   String?
+  dimensions    String?
+  createdAt     DateTime    @default(now())
+  categories    Category[]
+  orderItems    OrderItem[]
+
+  //ta bort senare
+  category String?
 }
 
 model Order {
-  id            String  @id @default(cuid())
-  orderNumber   String  @unique
-  name          String
-  email         String
-  address       String
-  createdAt     DateTime @default(now())
-  items         OrderItem[]
+  id          String      @id @default(cuid())
+  orderNumber String      @unique
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  name        String
+  email       String
+  address     String
+  postalCode  String
+  city        String
+  phone       String
+  shipped     Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  items       OrderItem[]
 }
 
 model OrderItem {
-  id        String  @id @default(cuid())
-  order     Order   @relation(fields: [orderId], references: [id])
+  id        String   @id @default(cuid())
   orderId   String
-  productId String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
   title     String
   price     Float
   quantity  Int

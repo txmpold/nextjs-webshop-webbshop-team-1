@@ -3,7 +3,10 @@
 import { Product } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
 
-export type CartProduct = Product & { quantity: number };
+export type CartProduct = Pick<
+  Product,
+  "id" | "title" | "price" | "image" | "slug" | "articleNumber"
+> & { quantity: number };
 
 export function useCart() {
   const [productsInCart, setProductsInCart] = useState<CartProduct[]>([]);
@@ -23,7 +26,7 @@ export function useCart() {
     }
   }, [productsInCart, isLoaded]);
 
-  const addToCart = useCallback((product: Product) => {
+  const addToCart = useCallback((product: CartProduct) => {
     setProductsInCart((prevCart) => {
       const existingProduct = prevCart.find((p) => p.id === product.id);
 
