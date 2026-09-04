@@ -3,367 +3,163 @@
  * OBS: Kan utökas men inte ändras pga cypress.
  **/
 
-import { Product as PrismaProduct } from "@prisma/client";
 
-export interface CartItem extends PrismaProduct {
-  quantity: number;
+export type SeedCategory = {
+  name: string;
+  slug: string;
+  description: string;
+};
+
+export type SeedProduct = {
+  articleNumber: string;
+  slug: string;
+  title: string;
+  description: string;
+  image: string;
+  price: number;
+  stock: number;
+  condition: string; 
+  type: string;
+  releaseYear?: number;
+  platform?: string;
+  issueNumber?: string;
+  dimensions?: string;
+  categorySlugs: string[];
 }
 
-export type Product = PrismaProduct;
+export const categories: SeedCategory[] = [
+  { name: "TV-spel", slug: "tv-spel", description: "Begagnade spel till konsoler från 80- och 90-talet." },
+  { name: "Serietidningar", slug: "serietidningar", description: "Klassiska serietidningar i varierande skick." },
+  { name: "Posters", slug: "posters", description: "Filmaffischer och konserttryck i original." },
+  { name: "Merch", slug: "merch", description: "Prylar och samlarobjekt från spel- och seriekulturen." },
+]
+
+
 
 /* Lägg till era produkter här */
-export const products: Product[] = [
+export const products: SeedProduct[] = [
   {
-    id: "1",
-    slug: "top-1",
-    category: "Tops",
-    articleNumber: "112",
-    image: "/assets/images/top-1.jpg",
-    title: "Vintage T-shirt",
-    description:
-      "A soft washed T-shirt with a vintage look and feel. Designed with a relaxed fit and subtle fading for everyday comfort and style.",
-    price: 200,
-  },
-  {
-    id: "2",
-    slug: "top-2",
-    category: "Tops",
-    articleNumber: "113",
-    image: "/assets/images/top-2.jpg",
-    title: "Vintage T-shirt",
-    description:
-      "Oversized vintage-inspired T-shirt with a loose silhouette and worn-in finish. Perfect for a laid-back, effortless outfit.",
-    price: 300,
-  },
-  {
-    id: "3",
-    slug: "top-3",
-    category: "Tops",
-    articleNumber: "114",
-    image: "/assets/images/top-3.jpg",
-    title: "Vintage T-shirt",
-    description:
-      "Retro graphic T-shirt with a faded print and vintage character. Made for those who want a bold yet timeless look.",
-    price: 450,
-  },
-  {
-    id: "4",
-    slug: "top-4",
-    category: "Tops",
-    articleNumber: "115",
-    image: "/assets/images/top-4.jpg",
-    title: "Vintage T-shirt",
-    description:
-      "Classic T-shirt with a vintage touch. Soft fabric and relaxed fit make it ideal for layering or wearing on its own.",
-    price: 350,
-  },
-  {
-    id: "5",
-    slug: "top-5",
-    category: "Tops",
-    articleNumber: "116",
-    image: "/assets/images/top-5.jpg",
-    title: "Vintage T-shirt",
-    description:
-      "Comfortable T-shirt with a vintage-inspired wash and relaxed fit. Designed for effortless street wear style.",
-    price: 275,
-  },
-  {
-    id: "6",
-    slug: "top-6",
-    category: "Tops",
-    articleNumber: "117",
-    image: "/assets/images/top-6.jpg",
-    title: "Vintage T-shirt",
-    description:
-      "Timeless T-shirt with a soft feel and worn-in look. A perfect blend of comfort and vintage style.",
-    price: 275,
-  },
-  {
-    id: "7",
-    slug: "top-7",
-    category: "Tops",
-    articleNumber: "118",
-    image: "/assets/images/top-7.jpg",
-    title: "Vintage T-shirt",
-    description:
-      "A timeless vintage-inspired T-shirt crafted from soft, breathable cotton. Designed with a relaxed fit and a worn-in feel for effortless, everyday style",
-    price: 325,
-  },
-  {
-    id: "8",
-    slug: "top-8",
-    category: "Tops",
-    articleNumber: "119",
-    image: "/assets/images/top-8.jpg",
-    title: "Vintage T-shirt",
-    description:
-      "Lightweight T-shirt with a classic vintage aesthetic. Designed for warm days with a relaxed and breathable fit.",
-    price: 450,
-  },
-  {
-    id: "9",
-    slug: "bottom-1",
-    category: "Bottoms",
-    articleNumber: "889",
-    image: "/assets/images/bottom-1.jpg",
-    title: "Vintage Cargo Pants",
-    description:
-      "Classic cargo pants with a relaxed fit and authentic worn-in feel. Made from durable cotton for everyday comfort and timeless style.",
-    price: 799,
-  },
-  {
-    id: "10",
-    slug: "bottom-2",
-    category: "Bottoms",
-    articleNumber: "890",
-    image: "/assets/images/bottom-2.jpg",
-    title: "Vintage Chinos",
-    description:
-      "Soft vintage-style chinos with a relaxed silhouette and faded finish. Designed for comfort with a laid-back vibe.",
-    price: 650,
-  },
-  {
-    id: "11",
-    slug: "bottom-3",
-    category: "Bottoms",
-    articleNumber: "891",
-    image: "/assets/images/bottom-3.jpg",
-    title: "Vintage Plaid Chinos",
-    description:
-      "Lightweight vintage-inspired plaid chinos with a worn-in look. Perfect for warm days with a relaxed fit and effortless style.",
-    price: 499,
-  },
-  {
-    id: "12",
-    slug: "bottom-4",
-    category: "Bottoms",
-    articleNumber: "892",
-    image: "/assets/images/bottom-4.jpg",
-    title: "Vintage Jeans",
-    description:
-      "Classic vintage jeans with a vintage finish. Featuring patches and a relaxed fit for a rustic style.",
-    price: 899,
-  },
-  {
-    id: "13",
-    slug: "bottom-5",
-    category: "Bottoms",
-    articleNumber: "893",
-    image: "/assets/images/bottom-5.jpg",
-    title: "Vintage Denim Jeans",
-    description:
-      "Timeless denim jeans with a vintage wash and slightly distressed details. Designed for a casual, effortless look.",
-    price: 550,
-  },
-  {
-    id: "14",
-    slug: "bottom-6",
-    category: "Bottoms",
-    articleNumber: "894",
-    image: "/assets/images/bottom-6.jpg",
-    title: "Vintage Cargo Pants",
-    description:
-      "Comfortable vintage-style cargo pants with a soft feel and tapered fit. Perfect for everyday wear with a retro touch and feel.",
-    price: 699,
-  },
-  {
-    id: "15",
-    slug: "bottom-7",
-    category: "Bottoms",
-    articleNumber: "895",
-    image: "/assets/images/bottom-7.jpg",
-    title: "Vintage Blue Jeans",
-    description:
-      "Breathable jeans with a vintage-inspired design. Lightweight and relaxed for a clean, effortless summer style.",
-    price: 750,
-  },
-  {
-    id: "16",
-    slug: "bottom-8",
-    category: "Bottoms",
-    articleNumber: "896",
-    image: "/assets/images/bottom-8.jpg",
-    title: "Vintage Blue Jeans",
-    description:
-      "Retro jeans with a soft texture and vintage feel. Designed with a relaxed fit for timeless everyday wear.",
-    price: 820,
-  },
-  {
-    id: "17",
-    slug: "shoe-1",
-    category: "Shoes",
-    articleNumber: "897",
-    image: "/assets/images/shoe-1.jpg",
-    title: "Vintage 'All-Star' Sneakers",
-    description:
-      "Retro-inspired All-Star sneakers with a classic silhouette and worn-in details. Designed for everyday comfort with a timeless street wear feel.",
-    price: 950,
-  },
-  {
-    id: "18",
-    slug: "shoe-2",
-    category: "Shoes",
-    articleNumber: "898",
-    image: "/assets/images/shoe-2.jpg",
-    title: "Vintage Leather Boots",
-    description:
-      "Durable leather boots with a vintage finish. Built for both style and longevity with a rugged, timeless look.",
-    price: 1299,
-  },
-  {
-    id: "19",
-    slug: "shoe-3",
-    category: "Shoes",
-    articleNumber: "899",
-    image: "/assets/images/shoe-3.jpg",
-    title: "Vintage Boots",
-    description:
-      "Lightweight boots with a faded vintage look. Perfect for casual wear with a relaxed and effortless style.",
-    price: 699,
-  },
-  {
-    id: "20",
-    slug: "shoe-4",
-    category: "Shoes",
-    articleNumber: "900",
-    image: "/assets/images/shoe-4.jpg",
-    title: "Vintage 'All-Star' Shoes",
-    description:
-      "Old-school shoes inspired by 'All-Star' design. Comfortable cushioning meets a nostalgic athletic aesthetic.",
-    price: 999,
-  },
-  {
-    id: "21",
-    slug: "shoe-5",
-    category: "Shoes",
-    articleNumber: "901",
-    image: "/assets/images/shoe-5.jpg",
-    title: "Vintage Winter Boots",
-    description:
-      "Classic durable winter boots with a vintage touch. Classic design combined with warm layers for a relaxed and comfy look for colder weather.",
-    price: 1100,
-  },
-  {
-    id: "22",
-    slug: "shoe-6",
-    category: "Shoes",
-    articleNumber: "902",
-    image: "/assets/images/shoe-6.jpg",
-    title: "Vintage Sneakers",
-    description:
-      "Minimalist sneakers with a vintage-inspired design. Lightweight and breathable for warm-weather comfort.",
-    price: 550,
-  },
-  {
-    id: "23",
-    slug: "shoe-7",
-    category: "Shoes",
-    articleNumber: "903",
-    image: "/assets/images/shoe-7.jpg",
-    title: "Vintage Cowboy Boots",
-    description:
-      "Retro cowboy boots with a classic silhouette and worn-in aesthetic. Perfect for a bold vintage street style.",
-    price: 1050,
-  },
-  {
-    id: "24",
-    slug: "shoe-8",
-    category: "Shoes",
-    articleNumber: "904",
-    image: "/assets/images/shoe-8.jpg",
-    title: "Vintage Suede Boots",
-    description:
-      "Soft suede boots with a classic finish. Designed for a clean yet relaxed look with subtle retro character.",
-    price: 980,
-  },
-
-  {
-    id: "25",
-    slug: "accessory-1",
-    category: "Accessories",
-    articleNumber: "905",
-    image: "/assets/images/accessory-1.jpg",
-    title: "Vintage Baseball Cap",
-    description:
-      "Classic cap with Korean War Veteran logo. A timeless accessory that adds a casual retro touch.",
-    price: 299,
-  },
-  {
-    id: "26",
-    slug: "accessory-2",
-    category: "Accessories",
-    articleNumber: "906",
-    image: "/assets/images/accessory-2.jpg",
-    title: "Vintage Baseball Cap",
-    description:
-      "Soft cap with a vintage-inspired look. Designed for a relaxed and effortless everyday style.",
+    articleNumber: "TV-1001",
+    slug: "sonic-the-hedgehog-2",
+    title: "Sonic the Hedgehog 2",
+    description: "Komplett i kartong med manual. Kartongen har lätt hyllslitage.",
+    image: "/assets/products/sonic-the-hedgehog-2.jpg",
     price: 249,
+    stock: 1,
+    condition: "Bra",
+    type: "game",
+    releaseYear: 1992,
+    platform: "Mega Drive",
+    categorySlugs: ["tv-spel"],
   },
   {
-    id: "27",
-    slug: "accessory-3",
-    category: "Accessories",
-    articleNumber: "907",
-    image: "/assets/images/accessory-3.jpg",
-    title: "Vintage Army Belt",
-    description:
-      "Retro army belt with a timeless design. Perfect for adding a bold vintage edge to any outfit.",
+    articleNumber: "TV-1002",
+    slug: "super-mario-world",
+    title: "Super Mario World",
+    description: "Endast kassett. Testad och fungerar. Etiketten är hel.",
+    image: "/assets/products/super-mario-world.jpg",
     price: 399,
+    stock: 1,
+    condition: "Mycket bra",
+    type: "game",
+    releaseYear: 1990,
+    platform: "SNES",
+    categorySlugs: ["tv-spel"],
   },
   {
-    id: "28",
-    slug: "accessory-4",
-    category: "Accessories",
-    articleNumber: "908",
-    image: "/assets/images/accessory-4.jpg",
-    title: "Vintage 'Tour de Franc' Cap",
-    description:
-      "Classic bike styled cap with a 'Tour de Franc'-inspired fit. Perfect for daily use with a stylish feel.",
+    articleNumber: "TV-1003",
+    slug: "street-fighter-ii",
+    title: "Street Fighter II",
+    description: "Välanvänd kassett med repor på etiketten. Fungerar felfritt.",
+    image: "/assets/products/street-fighter-ii.jpg",
+    price: 299,
+    stock: 0,
+    condition: "Sliten",
+    type: "game",
+    releaseYear: 1992,
+    platform: "SNES",
+    categorySlugs: ["tv-spel"],
+  },
+  {
+    articleNumber: "SE-2001",
+    slug: "fantomen-nr-4-1992",
+    title: "Fantomen nr 4, 1992",
+    description: "Läst en gång. Rygg utan veck, inga fläckar.",
+    image: "/assets/products/fantomen-nr-4-1992.jpg",
+    price: 45,
+    stock: 1,
+    condition: "Bra",
+    type: "comic",
+    releaseYear: 1992,
+    issueNumber: "Nr 4, 1992",
+    categorySlugs: ["serietidningar"],
+  },
+  {
+    articleNumber: "SE-2002",
+    slug: "kalle-anka-nr-12-1991",
+    title: "Kalle Anka & C:o nr 12, 1991",
+    description: "Fint skick för sin ålder. Lätt gulnade sidor.",
+    image: "/assets/products/kalle-anka-nr-12-1991.jpg",
+    price: 35,
+    stock: 3,
+    condition: "Mycket bra",
+    type: "comic",
+    releaseYear: 1991,
+    issueNumber: "Nr 12, 1991",
+    categorySlugs: ["serietidningar"],
+  },
+  {
+    articleNumber: "PO-3001",
+    slug: "jurassic-park-filmaffisch",
+    title: "Jurassic Park – filmaffisch",
+    description: "Originalaffisch från biopremiären. Två små nålhål i överkant.",
+    image: "/assets/products/jurassic-park-filmaffisch.jpg",
     price: 450,
+    stock: 1,
+    condition: "Bra",
+    type: "poster",
+    releaseYear: 1993,
+    dimensions: "70 x 100 cm",
+    categorySlugs: ["posters"],
   },
   {
-    id: "29",
-    slug: "accessory-5",
-    category: "Accessories",
-    articleNumber: "909",
-    image: "/assets/images/accessory-5.jpg",
-    title: "Vintage Tote Bag",
-    description:
-      "Classic tote bag with a stylish and practical design. Adds a nice accessory details while you're out and about.",
-    price: 550,
+    articleNumber: "PO-3002",
+    slug: "konsertaffisch-1992",
+    title: "Konsertaffisch, Europaturné 1992",
+    description: "Tryckt inför turnén. Vikmärken efter förvaring.",
+    image: "/assets/products/konsertaffisch-1992.jpg",
+    price: 380,
+    stock: 1,
+    condition: "Sliten",
+    type: "poster",
+    releaseYear: 1992,
+    dimensions: "61 x 91 cm",
+    categorySlugs: ["posters"],
   },
   {
-    id: "30",
-    slug: "accessory-6",
-    category: "Accessories",
-    articleNumber: "910",
-    image: "/assets/images/accessory-6.jpg",
-    title: "Vintage Half-size Gloves",
-    description:
-      "Cotton half-size gloves with the perfect design for when you need to use your fingers. Add extra comfort and warmth on colder days.",
-    price: 350,
+    articleNumber: "PO-3003",
+    slug: "nintendo-power-affisch",
+    title: "Nintendo Power-affisch",
+    description: "Följde med tidningen 1991. Räknas både som affisch och samlarobjekt.",
+    image: "/assets/products/nintendo-power-affisch.jpg",
+    price: 220,
+    stock: 1,
+    condition: "Bra",
+    type: "poster",
+    releaseYear: 1991,
+    dimensions: "50 x 70 cm",
+    categorySlugs: ["posters", "merch"],
   },
   {
-    id: "31",
-    slug: "accessory-7",
-    category: "Accessories",
-    articleNumber: "911",
-    image: "/assets/images/accessory-7.jpg",
-    title: "Vintage Tote Bag",
-    description:
-      "Classic tote bag with a inspired week-end design. A timeless accessory that blends style and function.",
-    price: 1200,
-  },
-  {
-    id: "32",
-    slug: "accessory-8",
-    category: "Accessories",
-    articleNumber: "912",
-    image: "/assets/images/accessory-8.jpg",
-    title: "Vintage 'Chevy' Baseball Cap",
-    description:
-      "Durable cotton cap with a vintage aesthetic. Designed for everyday use with both style and practicality.",
-    price: 799,
+    articleNumber: "ME-4001",
+    slug: "nintendo-keps",
+    title: "Nintendo-keps",
+    description: "Broderad logotyp. Tvättad, inga fläckar.",
+    image: "/assets/products/nintendo-keps.jpg",
+    price: 199,
+    stock: 2,
+    condition: "Bra",
+    type: "merch",
+    categorySlugs: ["merch"],
   },
 ];
