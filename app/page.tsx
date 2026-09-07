@@ -47,8 +47,6 @@ export default async function Home() {
               price={product.price}
               imageUrl={product.image}
               slug={product.slug}
-              category={product.category}
-              description={product.description}
             />
           ))}
         </section>
