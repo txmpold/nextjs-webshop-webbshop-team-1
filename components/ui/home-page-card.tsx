@@ -12,8 +12,6 @@ export interface HomePageCardProps {
   imageUrl: string;
   price: number;
   slug: string;
-  category: string | null;
-  description: string;
 }
 
 export default function HomePageCard({
@@ -23,8 +21,6 @@ export default function HomePageCard({
   imageUrl,
   price,
   slug,
-  category,
-  description,
 }: HomePageCardProps) {
   return (
     <Card data-cy="product" className="p-0 relative">
@@ -65,8 +61,6 @@ export default function HomePageCard({
         imageUrl={imageUrl}
         price={price}
         slug={slug}
-        category={category}
-        description={description}
         buttonText=""
         variant="outline"
         size="icon"

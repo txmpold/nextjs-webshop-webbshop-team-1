@@ -8,6 +8,7 @@ export type SeedCategory = {
   name: string;
   slug: string;
   description: string;
+  image: string;
 };
 
 export type SeedProduct = {
@@ -18,21 +19,41 @@ export type SeedProduct = {
   image: string;
   price: number;
   stock: number;
-  condition: string; 
+  condition: string;
   type: string;
   releaseYear?: number;
   platform?: string;
   issueNumber?: string;
   dimensions?: string;
   categorySlugs: string[];
-}
+};
 
 export const categories: SeedCategory[] = [
-  { name: "TV-spel", slug: "tv-spel", description: "Begagnade spel till konsoler från 80- och 90-talet." },
-  { name: "Serietidningar", slug: "serietidningar", description: "Klassiska serietidningar i varierande skick." },
-  { name: "Posters", slug: "posters", description: "Filmaffischer och konserttryck i original." },
-  { name: "Merch", slug: "merch", description: "Prylar och samlarobjekt från spel- och seriekulturen." },
-]
+  {
+    name: "TV-spel",
+    slug: "tv-spel",
+    description: "Begagnade spel till konsoler från 80- och 90-talet.",
+    image: "/assets/categories/tv-spel.jpg",
+  },
+  {
+    name: "Serietidningar",
+    slug: "serietidningar",
+    description: "Klassiska serietidningar i varierande skick.",
+    image: "/assets/categories/serietidningar.jpg",
+  },
+  {
+    name: "Posters",
+    slug: "posters",
+    description: "Filmaffischer och konserttryck i original.",
+    image: "/assets/categories/posters.jpg",
+  },
+  {
+    name: "Merch",
+    slug: "merch",
+    description: "Prylar och samlarobjekt från spel- och seriekulturen.",
+    image: "/assets/categories/merch.jpg",
+  },
+];
 
 
 

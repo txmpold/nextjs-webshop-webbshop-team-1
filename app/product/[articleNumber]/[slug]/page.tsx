@@ -38,14 +38,12 @@ export default async function ProductDetailPage({
             </p>
 
             <AddToCartButton
-              id={product.articleNumber}
+              id={product.id}
               title={product.title}
               articleNumber={product.articleNumber}
               imageUrl={product.image}
               price={product.price}
               slug={product.slug}
-              category={product.category}
-              description={product.description}
               buttonText="Add to Cart"
               variant="default"
               className="px-5 py-6 mb-10 mt-2 bg-[#ddd9cd] text-black rounded-xl hover:bg-[#8b0836] hover:text-white  transition-all duration-300 cursor-pointer"

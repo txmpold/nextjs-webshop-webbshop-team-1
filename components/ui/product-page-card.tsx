@@ -43,8 +43,6 @@ export default function ProductCard({
           imageUrl={imageUrl}
           price={price}
           slug={slug}
-          category=""
-          description=""
           size="lg"
           buttonText="Add to Cart"
           className="flex-1 bg-black! text-white! hover:cursor-pointer"

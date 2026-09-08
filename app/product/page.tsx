@@ -8,62 +8,47 @@ export default async function ProductPage({
   searchParams: Promise<{ category?: string }>;
 }) {
   const params = await searchParams;
-  const products = await db.product.findMany({
-    where: params.category ? { category: params.category } : undefined,
-  });
+
+  const [products, categories] = await Promise.all([
+    db.product.findMany({
+      where: params.category
+        ? { categories: { some: { slug: params.category } } }
+        : undefined,
+    }),
+    db.category.findMany({ orderBy: { name: "asc" } }),
+  ]);
+
+  const activeCategory = categories.find((c) => c.slug === params.category);
 
   return (
     <main className="grid gap-4 place-items-center select-none">
       <h1 className="text-3xl font-bold m-10">
-        {params.category || "Products"}
+        {activeCategory?.name ?? "Products"}
       </h1>
       <nav className="pl-4 pr-4 text-xs md:text-md lg:text-lg">
         <ul className="flex justify-evenly gap-3 font-xs sm:gap-10 font-md md:gap-15 font-lg lg:gap-25 font-xl">
           <li>
             <Link
               href="/product"
-              className={`text-black hover:underline ${!params.category ? "font-bold" : ""
-                }`}
+              className={`text-black hover:underline ${
+                !params.category ? "font-bold" : ""
+              }`}
             >
-              ALL
+              ALLA
             </Link>
           </li>
-          <li>
-            <Link
-              href="/product?category=Tops"
-              className={`text-black hover:underline ${params.category === "Tops" ? "font-bold" : ""
+          {categories.map((category) => (
+            <li key={category.id}>
+              <Link
+                href={`/product?category=${category.slug}`}
+                className={`text-black hover:underline ${
+                  params.category === category.slug ? "font-bold" : ""
                 }`}
-            >
-              TOPS
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/product?category=Bottoms"
-              className={`text-black hover:underline ${params.category === "Bottoms" ? "font-bold" : ""
-                }`}
-            >
-              BOTTOMS
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/product?category=Shoes"
-              className={`text-black hover:underline ${params.category === "Shoes" ? "font-bold" : ""
-                }`}
-            >
-              SHOES
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/product?category=Accessories"
-              className={`text-black hover:underline ${params.category === "Accessories" ? "font-bold" : ""
-                }`}
-            >
-              ACCESSORIES
-            </Link>
-          </li>
+              >
+                {category.name.toUpperCase()}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
       <section className="grid gap-4 p-5 pb-10 pt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -76,11 +61,10 @@ export default async function ProductPage({
             price={product.price}
             imageUrl={product.image}
             slug={product.slug}
-            category=""
-            description=""
           />
         ))}
       </section>
     </main>
   );
 }
+
