@@ -7,6 +7,7 @@ import ContactFormFields from "./contact-form-fields";
 import { PaymentFormFields } from "./payment-form-fields";
 import { Button } from "./ui/button";
 import { useCartContext } from "@/app/providers/cart-provider";
+import { createOrder } from "@/app/actions/order-actions";
 
 export function Form() {
   const { productsInCart } = useCartContext();
@@ -16,14 +17,26 @@ export function Form() {
   });
 
   const saveCustomer = async (customer: Customer) => {
-    const orderNumber = Math.floor(1000000 + Math.random() * 90000).toString();
-    const order = {
-      orderNumber, customer, products: productsInCart,
-    };
+    const result = await createOrder({
+      name: customer.name,
+      email: customer.email,
+      address: customer.address,
+      postalCode: customer.postalCode,
+      city: customer.city,
+      phone: customer.phoneNr,
+      items: productsInCart.map((product) => ({
+        productId: product.id,
+        quantity: product.quantity,
+      })),
+    });
 
-    localStorage.setItem("latestOrder", JSON.stringify(order));
+    if (!result.success) {
+      console.error(result.error);
+      return;
+    }
+
     localStorage.removeItem("cart");
-    window.location.href = `/confirmation/${orderNumber}`;
+    window.location.href = `/confirmation/${result.orderNumber}`;
   };
 
   return (
@@ -43,4 +56,4 @@ export function Form() {
       </Button>
     </form>
   );
-};
+}
