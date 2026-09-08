@@ -13,8 +13,20 @@ async function deleteProduct(formData: FormData) {
   revalidatePath("/admin")
 }
 
+async function markOrderAsSent(formData: FormData) {
+  "use server"
+
+  const id = formData.get("id") as string
+  await db.order.update({
+    where: { id },
+    data: { shipped: true },
+  })
+  revalidatePath("/admin")
+}
+
 export default async function AdminPage() {
   const products = await db.product.findMany({});
+  const orders = await db.order.findMany({});
   return (
     <main className="grid">
       <p className="text-3xl font-bold m-10 text-center">Our products</p>
@@ -96,6 +108,28 @@ export default async function AdminPage() {
             </div>
           </article>
         ))}
+      </section>
+
+      <section className="p-6">
+        <p className="text-3xl font-bold mb-4 text-center">Orders</p>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {orders.map((order) => (
+            <article key={order.id} className="border rounded-xl p-4">
+              <p className="font-bold">Order: {order.orderNumber}</p>
+              <p>{order.name}</p>
+              <p>{order.email}</p>
+
+              {order.shipped ? (
+                <p className="mt-4 font-bold text-green-700">Sent</p>
+              ) : (
+                <form action={markOrderAsSent} className="mt-4">
+                  <input type="hidden" name="id" value={order.id} />
+                  <Button type="submit" variant="outline">Mark as sent</Button>
+                </form>
+              )}
+            </article>
+          ))}
+        </div>
       </section>
     </main >
   );
