@@ -9,7 +9,7 @@ export default function LoginButton() {
   if (session) {
     return (
       <Link
-        href={"/login"}
+        href={"/profile"}
         className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
       >
         Profile
