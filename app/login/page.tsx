@@ -70,7 +70,7 @@ export default function LoginPage() {
         </button>
 
         <h3 className="text-gray-500">Not a member?</h3>
-        <Link href="/sign-up" className="hover:underline font-bold">
+        <Link href="/register" className="hover:underline font-bold">
           Register
         </Link>
       </form>
