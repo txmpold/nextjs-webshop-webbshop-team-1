@@ -185,6 +185,32 @@ function ProductFormInputs({ register, formState }: ProductFormInputsProps) {
         )}
       </Field>
 
+      <Field>
+        <FieldLegend className="text-2xl font-bold text-zinc-800">
+          Stock
+        </FieldLegend>
+
+        <Input
+          data-cy="product-stock"
+          {...register("stock")}
+          id="stock"
+          type="number"
+          min="0"
+          step="1"
+          className={cn("h-10 p-4", {
+            "border-red-600 border-2": formState.errors.stock,
+          })}
+          autoComplete="off" />
+        {formState.errors.stock && (
+          <p
+            data-cy="product-stock-error"
+            className="text-red-600 text-sm"
+          >
+            {formState.errors.stock.message}
+          </p>
+        )}
+      </Field>
+
       <Field className="pt-6 pb-6" orientation="horizontal">
         <div className="flex gap-4">
           <Button type="submit" variant="outline" className="rounded-full bg-black text-white">

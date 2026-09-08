@@ -1,50 +1,47 @@
 "use client";
 
-import { signIn } from "@/lib/auth-client";
+import { signUp } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { z } from "zod";
 
-const loginSchema = z.object({
+const signUpSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-export default function LoginPage() {
-  const router = useRouter();
+export default function RegisterPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
-    const result = loginSchema.safeParse({ email, password });
-
-    if (!result.success) {
-      setError(result.error.issues[0].message);
-      return;
-    }
-
     try {
-      await signIn.email({
-        email: result.data.email,
-        password: result.data.password,
-      });
-
-      router.push("/product");
+      await signUp.email({ name, email, password });
+      router.push("/");
     } catch (err) {
-      console.error("login failed:", err);
-      setError("Invalid email or password.");
+      setError("Sign up failed. Please try again.");
     }
   };
 
   return (
     <main className="flex justify-center">
-      <form onSubmit={handleSubmit}>
-        <h1 className="font-bold">Welcome back!</h1>
+      <form onSubmit={handleLogin}>
+        <h1 className="font-bold">Welcome!</h1>
+
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
         <input
           type="email"
@@ -64,14 +61,14 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="py-3 px-10 rounded-lg text-white font-bold bg-[#8b0836] hover:cursor-pointer hover:bg-[#ddd9cd] hover:text-black transition-all duration-300"
+          className="absolute py-3 px-10 rounded-lg text-white font-bold bg-[#8b0836] hover:cursor-pointer hover:bg-[#ddd9cd] hover:text-black transition-all duration-300"
         >
-          Log in
+          Register
         </button>
 
-        <h3 className="text-gray-500">Not a member?</h3>
-        <Link href="/register" className="hover:underline font-bold">
-          Register
+        <h3 className="text-gray-500">Already a member?</h3>
+        <Link href={"/login"} className="hover:underline font-bold">
+          Login
         </Link>
       </form>
     </main>
