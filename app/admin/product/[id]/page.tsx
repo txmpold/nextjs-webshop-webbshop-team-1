@@ -8,10 +8,16 @@ async function editProduct(formData: FormData) {
   const id = formData.get("id") as string;
   const title = formData.get("title")?.toString().trim() || "";
   const price = Number(formData.get("price"));
+  const stockValue = formData.get("stock");
+  const stock = Number(stockValue);
   const description = formData.get("description")?.toString().trim() || "";
   const image = formData.get("image")?.toString().trim() || "";
   const category = formData.get("category")?.toString().trim() || "";
   const slug = formData.get("slug")?.toString().trim() || "";
+
+  if (typeof stockValue !== "string" || stockValue.trim() === "" || !Number.isInteger(stock) || stock < 0) {
+    return;
+  }
 
   await db.product.update({
     where: { id },
@@ -21,6 +27,7 @@ async function editProduct(formData: FormData) {
       description,
       image,
       category,
+      stock,
     },
   });
 
@@ -52,6 +59,7 @@ export default async function EditProductPage({
             description: product?.description,
             image: product?.image,
             price: product?.price.toString(),
+            stock: product?.stock.toString(),
             articleNumber: product?.articleNumber,
             slug: product?.slug,
           }}

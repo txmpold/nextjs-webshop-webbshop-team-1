@@ -6,8 +6,13 @@ async function createNewProduct(formData: FormData) {
 
   const title = formData.get("title") as string;
   const price = Number(formData.get("price"));
+  const stockValue = formData.get("stock");
+  const stock = Number(stockValue);
 
   if (!title || !price || price <= 0) {
+    return;
+  }
+  if (typeof stockValue !== "string" || stockValue.trim() === "" || !Number.isInteger(stock) || stock < 0) {
     return;
   }
   const description = formData.get("description") as string;
@@ -18,7 +23,7 @@ async function createNewProduct(formData: FormData) {
 
   await db.product.create({
     data: {
-      title, price, description, image, slug, articleNumber
+      title, price, description, image, slug, articleNumber, stock
     },
   });
 
