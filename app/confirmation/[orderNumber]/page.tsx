@@ -1,25 +1,37 @@
-"use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
+import { db } from "@/prisma/db";
+import { notFound } from "next/navigation";
 
-export default function ConfirmationPage({ params }: {
-  params: { orderNumber: string }
+export default async function ConfirmationPage({
+  params,
+}: {
+  params: Promise<{ orderNumber: string }>;
 }) {
-  const [order, setOrder] = useState<any>(null);
+  const { orderNumber } = await params;
 
-  useEffect(() => {
-    const storedOrder = localStorage.getItem("latestOrder");
-    if (storedOrder) {
-      setOrder(JSON.parse(storedOrder));
-    }
-  }, []);
+  // Hämtar ordern från databasen med ordernumret i url
+  const order = await db.order.findUnique({
+    where: {
+      orderNumber,
+    },
+    include: {
+      items: true,
+    },
+  });
 
+  // Visar 404 om ordern inte finns
   if (!order) {
-    return <div className="p-6 text-lg">Loading..</div>
+    notFound();
   }
+
+  // Räknar ut totalsumman för ordern
+  const total = order.items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
 
   return (
     <main>
@@ -33,59 +45,86 @@ export default function ConfirmationPage({ params }: {
 
           <CardContent className="space-y-4 flex flex-col justify-center gap-4">
             <div className="text-muted-foreground flex flex-col gap-2">
-              <p >Thank you for your purchase! Your order is being prepared and will be on its way soon.</p>
+              <p>
+                Thank you for your purchase! Your order is being prepared and
+                will be on its way soon.
+              </p>
+
               <p>
                 <strong>Order Number:</strong> #{" "}
                 <span className="font-bold text-stone-700">
                   {order.orderNumber}
                 </span>
               </p>
+
               <p>
                 <strong>Order Date:</strong>{" "}
                 <span className="text-black-600">
-                  {new Date().toDateString()}
+                  {order.createdAt.toDateString()}
                 </span>
               </p>
             </div>
 
-            <div data-cy="product" className="text-base bg-muted md:p-4 p-4 rounded-xl">
+            <div
+              data-cy="product"
+              className="text-base bg-muted md:p-4 p-4 rounded-xl"
+            >
               <div className="pb-2">
                 <div className="mb-4 text-xs md:text-base flex flex-col gap-0.5">
                   <p className="flex justify-between">
                     <span className="font-semibold">Name</span>
-                    <span>{order.customer.name}</span>
+                    <span>{order.name}</span>
                   </p>
+
                   <p className="flex justify-between">
                     <span className="font-semibold">Email</span>
-                    <span>{order.customer.email}</span>
+                    <span>{order.email}</span>
                   </p>
+
                   <p className="flex justify-between">
                     <span className="font-semibold">Address</span>
-                    <span>{order.customer.address}</span>
+                    <span>{order.address}</span>
                   </p>
+
                   <p className="flex justify-between">
                     <span className="font-semibold">City</span>
-                    <span>{order.customer.city}</span>
+                    <span>{order.city}</span>
                   </p>
+
                   <p className="flex justify-between">
                     <span className="font-semibold">Phone</span>
-                    <span>{order.customer.phoneNr}</span>
+                    <span>{order.phone}</span>
                   </p>
                 </div>
               </div>
+
               <Separator />
 
               <div className="flex flex-col gap-2 mt-4 text-xs md:text-base">
-                {order.products.map((item: any) => (
+                {order.items.map((item) => (
                   <div key={item.id}>
-                    <p data-cy="product-title" className="pb-2"><strong>Title:</strong> {item.title}</p>
-                    <p className="pb-2"><strong>Amount:</strong> {item.quantity}</p>
-                    <p data-cy="product-price" className="pb-2"><strong>Price:</strong> {item.price} kr</p>
+                    <p data-cy="product-title" className="pb-2">
+                      <strong>Title:</strong> {item.title}
+                    </p>
+
+                    <p className="pb-2">
+                      <strong>Amount:</strong> {item.quantity}
+                    </p>
+
+                    <p data-cy="product-price" className="pb-2">
+                      <strong>Price:</strong> {item.price} kr
+                    </p>
                   </div>
                 ))}
               </div>
+
               <Separator />
-              <div className="text-lg pt-4 pb-2"><p><strong>Total:</strong>{" "} {order.products.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0)} {" "} kr</p></div>
+
+              <div className="text-lg pt-4 pb-2">
+                <p>
+                  <strong>Total:</strong> {total} kr
+                </p>
+              </div>
             </div>
 
             <Link href="/product">
@@ -96,8 +135,6 @@ export default function ConfirmationPage({ params }: {
           </CardContent>
         </Card>
       </div>
-
-
     </main>
   );
 }
