@@ -21,16 +21,21 @@
   "dependencies": {
     "@base-ui/react": "^1.4.0",
     "@hookform/resolvers": "^5.2.2",
+    "@prisma/adapter-better-sqlite3": "^7.10.0",
+    "@prisma/adapter-pg": "^7.10.0",
     "@tailwindcss/postcss": "^4.2.2",
+    "better-auth": "^1.7.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
+    "dotenv": "^17.4.2",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^1.8.0",
     "next": "^16.2.3",
     "next-themes": "^0.4.6",
+    "pg": "^8.23.0",
     "postcss": "^8.5.9",
     "radix-ui": "^1.4.3",
     "react": "^19.1.1",
@@ -48,14 +53,16 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
-    "@prisma/client": "^6.19.3",
-    "@types/node": "^24.3.0",
+    "@prisma/client": "^7.10.0",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^24.13.3",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.2",
     "prettier": "^3.8.3",
-    "prisma": "^6.19.3",
+    "prisma": "^7.10.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   },
@@ -69,10 +76,11 @@
   "homepage": "https://github.com/plugga-tech/react-webshop-ts-template-nextjs#readme",
   "allowScripts": {
     "@prisma/client@6.19.3": true,
-    "@prisma/engines@6.19.3": true,
-    "esbuild@0.27.2": true,
     "msw@2.13.5": true,
-    "prisma@6.19.3": true,
-    "unrs-resolver@1.11.1": true
+    "better-sqlite3@12.11.1": true,
+    "@prisma/engines@7.10.0": true,
+    "prisma@7.10.0": true,
+    "esbuild@0.28.2": true,
+    "unrs-resolver@1.12.2": true
   }
 }

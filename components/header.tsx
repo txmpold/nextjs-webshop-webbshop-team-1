@@ -3,6 +3,7 @@ import { useCartContext } from "@/app/providers/cart-provider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import LoginButton from "./login-button";
 
 export default function Header() {
   const { productsInCart, isLoaded } = useCartContext();
@@ -25,15 +26,17 @@ export default function Header() {
 
   return (
     <header
-      className={`flex flex-wrap relative items-center md:justify-between lg:justify-between border-rose-900 bg-white z-50 transition-all duration-300 ${isHomePage ? "sticky top-0" : ""
-        } ${isScrolled ? "justify-center items-center px-4 py-3 border-b-10" : "px-8 py-10 border-b-26"}`}
+      className={`flex flex-wrap relative items-center md:justify-between lg:justify-between border-rose-900 bg-white z-50 transition-all duration-300 ${
+        isHomePage ? "sticky top-0" : ""
+      } ${isScrolled ? "justify-center items-center px-4 py-3 border-b-10" : "px-8 py-10 border-b-26"}`}
     >
       <div className="flex flex-1 justify-center items-center md:justify-start lg:justify-start">
-
         <Link
           href="/"
-          className={`bg-[url('/assets/images/worn-stories-logo.png')] block bg-contain bg-no-repeat bg-center md:bg-left text-4xl text-black transition-all duration-300 ${isScrolled ? "w-40 h-20" : "w-56 h-32"
-            }`} aria-label="Home"
+          className={`bg-[url('/assets/images/worn-stories-logo.png')] block bg-contain bg-no-repeat bg-center md:bg-left text-4xl text-black transition-all duration-300 ${
+            isScrolled ? "w-40 h-20" : "w-56 h-32"
+          }`}
+          aria-label="Home"
         ></Link>
       </div>
 
@@ -62,6 +65,7 @@ export default function Header() {
           </span>
           )
         </Link>
+        <LoginButton></LoginButton>
       </nav>
     </header>
   );
