@@ -1,5 +1,17 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,22 +29,27 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
-    const result = loginSchema.safeParse({ email, password });
+    const validationResult = loginSchema.safeParse({ email, password });
 
-    if (!result.success) {
-      setError(result.error.issues[0].message);
+    if (!validationResult.success) {
+      setError(validationResult.error.issues[0].message);
       return;
     }
 
     try {
-      await signIn.email({
-        email: result.data.email,
-        password: result.data.password,
+      const authResult = await signIn.email({
+        email: validationResult.data.email,
+        password: validationResult.data.password,
       });
+
+      if (authResult.error) {
+        setError(authResult.error.message || "Invalid email or password.");
+        return;
+      }
 
       router.push("/product");
     } catch (err) {
@@ -42,38 +59,58 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex justify-center">
-      <form onSubmit={handleSubmit}>
-        <h1 className="font-bold">Welcome back!</h1>
+    <main className="flex justify-center items-center translate-y-[50%] h-auto">
+        <Card className="w-full max-w-sm">
+          <CardHeader>
+            <CardTitle>Welcome Back!</CardTitle>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
 
-        {error && <p className="text-red-500">{error}</p>}
+              {error && <p className="text-sm text-red-500">{error}</p>}
 
-        <button
-          type="submit"
-          className="py-3 px-10 rounded-lg text-white font-bold bg-[#8b0836] hover:cursor-pointer hover:bg-[#ddd9cd] hover:text-black transition-all duration-300"
-        >
-          Log in
-        </button>
-
-        <h3 className="text-gray-500">Not a member?</h3>
+              <Button type="submit" className="rounded-lg text-white font-bold bg-[#8b0836] lg:bottom-50  hover:cursor-pointer hover:bg-[#ddd9cd] hover:text-black transition-all duration-300">
+                Login
+              </Button>
+            {/* <Button variant="outline" className="w-full">
+              Login with GitHub
+            </Button> */}
+            </form>
+          </CardContent>
+          <CardFooter className="flex-col gap-2">
+        <h4 className="text-gray-500">Not a member?</h4>
         <Link href="/register" className="hover:underline font-bold">
           Register
         </Link>
-      </form>
+          </CardFooter>
+        </Card>
+
+      
+
     </main>
   );
 }
