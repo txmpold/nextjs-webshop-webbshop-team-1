@@ -1,5 +1,9 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { signUp } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,7 +23,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
@@ -32,45 +36,70 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="flex justify-center">
-      <form onSubmit={handleLogin}>
-        <h1 className="font-bold">Welcome!</h1>
+   <main className="flex justify-center items-center translate-y-[35%] h-auto">
+        <Card className="w-full max-w-sm">
+          <CardHeader>
+            <CardTitle>Become a member!</CardTitle>
 
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSignUp} className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>  
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
 
-        {error && <p className="text-red-500">{error}</p>}
+              {error && <p className="text-sm text-red-500">{error}</p>}
 
-        <button
-          type="submit"
-          className="absolute py-3 px-10 rounded-lg text-white font-bold bg-[#8b0836] hover:cursor-pointer hover:bg-[#ddd9cd] hover:text-black transition-all duration-300"
-        >
-          Register
-        </button>
-
-        <h3 className="text-gray-500">Already a member?</h3>
-        <Link href={"/login"} className="hover:underline font-bold">
+              <Button type="submit" className="w-full cursor-pointer">
+                Register
+              </Button>
+            {/* <Button variant="outline" className="w-full">
+              Login with GitHub
+            </Button> */}
+            </form>
+          </CardContent>
+          <CardFooter className="flex-col gap-2">
+        <h4 className="text-gray-500">Already a member?</h4>
+        <Link href="/login" className="hover:underline font-bold">
           Login
         </Link>
-      </form>
+          </CardFooter>
+        </Card>
+
+      
+
     </main>
   );
 }
