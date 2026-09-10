@@ -174,51 +174,65 @@ export default async function AdminPage() {
 
       <section className="p-6">
         <p className="text-3xl font-bold mb-4 text-center">Orders</p>
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {orders.map((order) => (
-            <article key={order.id} className="border rounded-xl p-4">
-              <p className="font-bold">Order: {order.orderNumber}</p>
 
-              <p className="text-sm text-muted-foreground">
-                {order.createdAt.toLocaleDateString("sv-SE")}
-              </p>
+        {orders.length === 0 ? (
+          <p className="text-center text-muted-foreground">No orders yet.</p>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {orders.map((order) => {
+              const total = order.items.reduce(
+                (sum, item) => sum + item.price * item.quantity,
+                0,
+              );
 
-              <div className="mt-3">
-                <p className="font-semibold">{order.name}</p>
-                <p>{order.email}</p>
-                <p>{order.phone}</p>
-                <p>{order.address}</p>
-                <p>
-                  {order.postalCode} {order.city}
-                </p>
-              </div>
+              return (
+                <article key={order.id} className="border rounded-xl p-4">
+                  <p className="font-bold">Order: {order.orderNumber}</p>
 
-              <div className="mt-4 border-t pt-4">
-                <p className="font-semibold mb-2">Products</p>
+                  <p className="text-sm text-muted-foreground">
+                    {order.createdAt.toLocaleDateString("sv-SE")}
+                  </p>
 
-                {order.items.map((item) => (
-                  <div key={item.id} className="mb-2">
-                    <p className="font-medium">{item.title}</p>
-                    <p className="text-sm">
-                      {item.quantity} x {item.price} kr
+                  <div className="mt-3">
+                    <p className="font-semibold">{order.name}</p>
+                    <p>{order.email}</p>
+                    <p>{order.phone}</p>
+                    <p>{order.address}</p>
+                    <p>
+                      {order.postalCode} {order.city}
                     </p>
                   </div>
-                ))}
-              </div>
 
-              {order.shipped ? (
-                <p className="mt-4 font-bold text-green-700">Sent</p>
-              ) : (
-                <form action={markOrderAsSent} className="mt-4">
-                  <input type="hidden" name="id" value={order.id} />
-                  <Button type="submit" variant="outline">
-                    Mark as sent
-                  </Button>
-                </form>
-              )}
-            </article>
-          ))}
-        </div>
+                  <div className="mt-4 border-t pt-4">
+                    <p className="font-semibold mb-2">Products</p>
+
+                    {order.items.map((item) => (
+                      <div key={item.id} className="mb-2">
+                        <p className="font-medium">{item.title}</p>
+                        <p className="text-sm">
+                          {item.quantity} x {item.price} kr
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className="mt-4 font-bold">Total: {total} kr</p>
+
+                  {order.shipped ? (
+                    <p className="mt-4 font-bold text-green-700">Sent</p>
+                  ) : (
+                    <form action={markOrderAsSent} className="mt-4">
+                      <input type="hidden" name="id" value={order.id} />
+                      <Button type="submit" variant="outline">
+                        Mark as sent
+                      </Button>
+                    </form>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        )}
       </section>
     </main>
   );
