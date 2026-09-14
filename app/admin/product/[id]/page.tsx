@@ -2,6 +2,7 @@
 import { db } from "@/prisma/db";
 import { revalidatePath } from "next/cache";
 import ProductForm from "../product-form";
+import { requireAdmin } from "@/lib/auth-server";
 
 async function editProduct(formData: FormData) {
   "use server";
@@ -15,7 +16,12 @@ async function editProduct(formData: FormData) {
   const category = formData.get("category")?.toString().trim() || "";
   const slug = formData.get("slug")?.toString().trim() || "";
 
-  if (typeof stockValue !== "string" || stockValue.trim() === "" || !Number.isInteger(stock) || stock < 0) {
+  if (
+    typeof stockValue !== "string" ||
+    stockValue.trim() === "" ||
+    !Number.isInteger(stock) ||
+    stock < 0
+  ) {
     return;
   }
 
@@ -40,6 +46,7 @@ export default async function EditProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireAdmin();
   const { id } = await params;
   const product = await db.product.findUnique({
     where: { articleNumber: id },
