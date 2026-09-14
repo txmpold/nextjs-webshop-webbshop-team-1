@@ -10,7 +10,7 @@ export default function LoginButton() {
     return (
       <Link
         href={"/profile"}
-        className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+        className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
       >
         Profile
       </Link>
@@ -20,7 +20,7 @@ export default function LoginButton() {
   return (
     <Link
       href={"/login"}
-      className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+      className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
     >
       Login
     </Link>
