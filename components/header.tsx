@@ -56,14 +56,14 @@ export default function Header() {
       )}
     </Link>
 
-    <nav className="flex flex-1 justify-center gap-8 text-sm md:text-lg md:justify-end">
-      <Link href="/product" className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-[#ece4d8]">
+    <nav className="flex flex-1 justify-center gap-15 text-sm md:text-lg md:justify-end">
+      <Link href="/product" className="text-[#ece4d8] hover:underline underline-offset-3 decoration-2 decoration-[#ece4d8]">
         Products
       </Link>
-      <Link href="/admin" data-cy="admin-link" className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-[#ece4d8]">
+      <Link href="/admin" data-cy="admin-link" className="text-[#ece4d8] hover:underline underline-offset-3 decoration-2 decoration-[#ece4d8]">
         Admin
       </Link>
-      <Link href="/checkout" data-cy="cart-link" className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-[#ece4d8]">
+      <Link href="/checkout" data-cy="cart-link" className="text-[#ece4d8] hover:underline underline-offset-3 decoration-2 decoration-[#ece4d8]">
         Cart (<span data-cy="cart-items-count-badge">{isLoaded ? totalQuantity : 0}</span>)
       </Link>
       <LoginButton />
