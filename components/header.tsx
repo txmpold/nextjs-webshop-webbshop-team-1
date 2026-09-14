@@ -32,7 +32,7 @@ export default function Header() {
 >
   <div className="flex flex-col">
     <div className="bg-[#b8342a] text-[#ece4d8] text-xs tracking-widest py-1.5 px-4 font-mono uppercase">
-      <p>Postorder · Sedan 1992</p>
+
     </div>
     <div className="h-2 bg-[#d9622b]" />
     <div className="h-2 bg-[#e8a13a]" />
@@ -44,26 +44,26 @@ export default function Header() {
     }`}
   >
     <Link href="/">
-      <h1 className={`font-display font-black tracking-tight text-[#ece4d8] leading-none transition-all duration-300 ${
+      <h1 className={`font-black tracking-tight text-[#ece4d8] leading-none transition-all duration-300 ${
         isScrolled ? "text-3xl" : "text-6xl md:text-7xl "
       }`}>
         KASSETTEN
       </h1>
       {!isScrolled && (
-        <p className="font-mono text-xs tracking-[0.3em] text-[#ece4d8] mt-2">
-          SPEL & SERIER & FILM
+        <p className="font-mono text-xs tracking-widest text-[#ece4d8] mt-2">
+          RETRO GAMES · SINCE 2002
         </p>
       )}
     </Link>
 
     <nav className="flex flex-1 justify-center gap-8 text-sm md:text-lg md:justify-end">
-      <Link href="/product" className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-zinc-500">
+      <Link href="/product" className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-[#ece4d8]">
         Products
       </Link>
-      <Link href="/admin" data-cy="admin-link" className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-zinc-500">
+      <Link href="/admin" data-cy="admin-link" className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-[#ece4d8]">
         Admin
       </Link>
-      <Link href="/checkout" data-cy="cart-link" className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-zinc-500">
+      <Link href="/checkout" data-cy="cart-link" className="text-[#ece4d8] hover:underline underline-offset-8 decoration-2 decoration-[#ece4d8]">
         Cart (<span data-cy="cart-items-count-badge">{isLoaded ? totalQuantity : 0}</span>)
       </Link>
       <LoginButton />
