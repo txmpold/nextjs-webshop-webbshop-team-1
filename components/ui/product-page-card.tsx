@@ -15,9 +15,16 @@ export default function ProductCard({
   slug,
 }: ProductCardProps) {
   return (
-    <Card data-cy="product" className="p-0">
-      <Link href={`/product/${articleNumber}/${slug}`} className="block">
-        <img src={imageUrl} alt={title} className="relative w-full mt-0" />
+    <Card data-cy="product" className="h-full gap-0 p-0">
+      <Link
+        href={`/product/${articleNumber}/${slug}`}
+        className="block leading-none"
+      >
+        <img
+          src={imageUrl}
+          alt={title}
+          className="block aspect-[2/3] w-full object-cover"
+        />
       </Link>
       <Link href={`/product/${articleNumber}/${slug}`} className="block">
         <CardHeader className="flex p-4 justify-between">

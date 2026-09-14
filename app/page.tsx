@@ -31,9 +31,13 @@ export default async function Home() {
   </button>
 </section>
       <h2 className="text-2xl md:text-4xl md:p-4">Shop by Category</h2>
-      <section className="w-full flex justify-evenly gap-8 overflow-x-auto p-2">
+      <section className="grid w-full grid-cols-1 gap-8 p-2 sm:grid-cols-2 lg:grid-cols-4">
         {categories.map((category) => (
-          <Link href={`/product?category=${category.slug}`} key={category.id}>
+          <Link
+            href={`/product?category=${category.slug}`}
+            key={category.id}
+            className="min-w-0"
+          >
             <CategoryCard category={category.name} image={category.image} />
           </Link>
         ))}
