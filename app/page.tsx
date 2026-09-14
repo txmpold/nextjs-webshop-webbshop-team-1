@@ -11,22 +11,25 @@ export default async function Home() {
 
   return (
     <main className="grid gap-8 place-items-center">
-      <section className="relative md:w-full lg:w-full overflow-hidden">
-        <h1 className="absolute hidden md:flex justify-center w-full text-center text-[8rem] font-bold text-white top-15">
-          Every Item <br />
-          Tells A Story
-        </h1>
-        <img
-          src="/assets/images/greeter.jpg"
-          alt="Greeter"
-          className="md:object-cover lg:object-cover overflow-hidden w-full md:h-240 lg:h-240"
-        />
-        <button className="absolute py-3 px-10 rounded-lg text-white font-bold bg-[#C4302B] lg:bottom-50 left-1/2 -translate-x-1/2 translate-y-1/2 hover:cursor-pointer hover:bg-[#EFA61D] hover:text-black transition-all duration-300">
-          <Link href="/product" className="text-lg">
-            Shop Now
-          </Link>
-        </button>
-      </section>
+      <section className="relative w-full overflow-hidden bg-[#2f2f2f] flex justify-center">
+  <video
+    src="/assets/videos/gameboy.mp4"
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="relative aspect-square w-full -translate-y-30 max-w-xl md:h-240 lg:h-240"
+  />
+
+  <h1 className="absolute top-75 left-1/2 -translate-x-1/2 text-[#EDE7DA] font-extrabold lg:text-9xl text-center tracking-tight drop-shadow-lg select-none">
+    PLAY LIKE IT'S 1989.
+  </h1>
+  <button className="absolute py-3 px-10 rounded-lg text-white font-bold bg-[#C4302B] lg:bottom-50 left-1/2 -translate-x-1/2 translate-y-1/2 hover:cursor-pointer hover:bg-[#EFA61D] hover:text-black transition-all duration-300">
+    <Link href="/product" className="text-lg">
+      Shop Now
+    </Link>
+  </button>
+</section>
       <h2 className="text-2xl md:text-4xl md:p-4">Shop by Category</h2>
       <section className="w-full flex justify-evenly gap-8 overflow-x-auto p-2">
         {categories.map((category) => (
