@@ -52,7 +52,7 @@ export async function createOrder(input: unknown) {
     return {
       success: false,
       error: "Invalid order data",
-      issues: result.error.flatten(),
+      issues: z.flattenError(result.error),
     };
   }
 

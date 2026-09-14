@@ -3,6 +3,7 @@
 import { Customer, customerSchema } from "@/data/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import ContactFormFields from "./contact-form-fields";
 import { PaymentFormFields } from "./payment-form-fields";
 import { Button } from "./ui/button";
@@ -11,12 +12,16 @@ import { createOrder } from "@/app/actions/order-actions";
 
 export function Form() {
   const { productsInCart } = useCartContext();
+  const [orderError, setOrderError] = useState<string | null>(null);
 
   const { register, handleSubmit, formState } = useForm<Customer>({
     resolver: zodResolver(customerSchema),
   });
 
   const saveCustomer = async (customer: Customer) => {
+    // Tar bort ett gammalt fel innan ett nytt orderförsök
+    setOrderError(null);
+
     const result = await createOrder({
       name: customer.name,
       email: customer.email,
@@ -30,8 +35,9 @@ export function Form() {
       })),
     });
 
+    // Visar serverns felmeddelande för användaren
     if (!result.success) {
-      console.error(result.error);
+      setOrderError(result.error ?? "Could not create order");
       return;
     }
 
@@ -47,6 +53,13 @@ export function Form() {
     >
       <ContactFormFields register={register} formState={formState} />
       <PaymentFormFields register={register} />
+
+      {orderError && (
+        <p role="alert" className="text-red-600 font-medium">
+          {orderError}
+        </p>
+      )}
+
       <Button
         data-cy="product-buy-button"
         type="submit"
