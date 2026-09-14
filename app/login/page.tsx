@@ -93,7 +93,7 @@ export default function LoginPage() {
 
               {error && <p className="text-sm text-red-500">{error}</p>}
 
-              <Button type="submit" className="rounded-lg text-white font-bold bg-[#8b0836] lg:bottom-50  hover:cursor-pointer hover:bg-[#ddd9cd] hover:text-black transition-all duration-300">
+              <Button type="submit" className="rounded-lg text-[#ece4d8]  bg-[#2f2f2f] lg:bottom-50  hover:cursor-pointer hover:bg-[#ece4d8] hover:text-[#2f2f2f] transition-all duration-300">
                 Login
               </Button>
             {/* <Button variant="outline" className="w-full">

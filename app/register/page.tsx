@@ -117,7 +117,7 @@ export default function RegisterPage() {
 
             {error && <p className="text-sm text-red-500">{error}</p>}
 
-            <Button type="submit" className="w-full cursor-pointer" disabled={status === "submitting"}>
+            <Button type="submit" className="w-full cursor-pointer bg-[#2f2f2f] text-[#ece4d8] hover:bg-[#ece4d8] hover:text-[#2f2f2f] transition-all duration-300" disabled={status === "submitting"}>
               {status === "submitting" ? "Creating account..." : "Register"}
             </Button>
           </form>
