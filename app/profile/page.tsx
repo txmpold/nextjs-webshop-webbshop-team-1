@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/auth-server";
 import { db } from "@/prisma/db";
 import { redirect } from "next/navigation";
+import LogoutButton from "@/components/logout-button";
 
 export default async function ProfilePage() {
 	const session = await getSession();
@@ -69,6 +70,7 @@ export default async function ProfilePage() {
 							<dt className="text-xs font-semibold uppercase text-zinc-500">Email</dt>
 							<dd className="mt-1 break-words text-zinc-900">{user.email}</dd>
 						</div>
+						<LogoutButton />
 					</dl>
 				</article>
 
@@ -79,6 +81,8 @@ export default async function ProfilePage() {
 
                 </article>
 			</section>
+
+			
 		</main>
 	);
 }
