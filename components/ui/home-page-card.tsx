@@ -23,13 +23,16 @@ export default function HomePageCard({
   slug,
 }: HomePageCardProps) {
   return (
-    <Card data-cy="product" className="p-0 relative">
-      <Link href={`/product/${articleNumber}/${slug}`} className="block">
+    <Card data-cy="product" className="relative gap-0 p-0">
+      <Link
+        href={`/product/${articleNumber}/${slug}`}
+        className="block leading-none"
+      >
         {imageUrl && (
           <img
             src={imageUrl}
             alt={title}
-            className="w-full object-cover block"
+            className="block aspect-[2/3] w-full object-cover"
           />
         )}
       </Link>

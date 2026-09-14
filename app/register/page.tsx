@@ -1,6 +1,10 @@
 "use client";
 
-import { signUp } from "@/lib/auth-client";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { signUp, signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
@@ -17,60 +21,114 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
   const router = useRouter();
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
+    const parsed = signUpSchema.safeParse({ name, email, password });
+    if (!parsed.success) {
+      setError(parsed.error.issues[0].message);
+      return;
+    }
+
+    setStatus("submitting");
+
     try {
       await signUp.email({ name, email, password });
-      router.push("/");
+
+     
+      setStatus("success");
+
+      
+      await signIn.email({ email, password });
+
+      setTimeout(() => {
+        router.push("/");
+      }, 3000);
     } catch (err) {
       setError("Sign up failed. Please try again.");
+      setStatus("idle");
     }
   };
 
+  if (status === "success") {
+    return (
+      <main className="flex justify-center items-center translate-y-[50%] h-auto">
+        <Card className="w-full max-w-sm">
+          <CardHeader>
+            <CardTitle>Welcome aboard!</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-gray-500">
+              Your account has been created. Logging you in...
+            </p>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
+
   return (
-    <main className="flex justify-center">
-      <form onSubmit={handleLogin}>
-        <h1 className="font-bold">Welcome!</h1>
+    <main className="flex justify-center items-center translate-y-[35%] h-auto">
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Become a member!</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSignUp} className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
 
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+            {error && <p className="text-sm text-red-500">{error}</p>}
 
-        {error && <p className="text-red-500">{error}</p>}
-
-        <button
-          type="submit"
-          className="absolute py-3 px-10 rounded-lg text-white font-bold bg-[#8b0836] hover:cursor-pointer hover:bg-[#ddd9cd] hover:text-black transition-all duration-300"
-        >
-          Register
-        </button>
-
-        <h3 className="text-gray-500">Already a member?</h3>
-        <Link href={"/login"} className="hover:underline font-bold">
-          Login
-        </Link>
-      </form>
+            <Button type="submit" className="w-full cursor-pointer" disabled={status === "submitting"}>
+              {status === "submitting" ? "Creating account..." : "Register"}
+            </Button>
+          </form>
+        </CardContent>
+        <CardFooter className="flex-col gap-2">
+          <h4 className="text-gray-500">Already a member?</h4>
+          <Link href="/login" className="hover:underline font-bold">
+            Login
+          </Link>
+        </CardFooter>
+      </Card>
     </main>
   );
 }
