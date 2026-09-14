@@ -12,6 +12,7 @@ import { db } from "@/prisma/db";
 import { Plus } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
+import { requireAdmin } from "@/lib/auth-server";
 
 async function deleteProduct(formData: FormData) {
   "use server";
@@ -33,6 +34,8 @@ async function markOrderAsSent(formData: FormData) {
 }
 
 export default async function AdminPage() {
+  await requireAdmin();
+
   const products = await db.product.findMany({});
   const orders = await db.order.findMany({
     include: {
