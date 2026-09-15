@@ -3,6 +3,7 @@ import { useCartContext } from "@/app/providers/cart-provider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import AdminButton from "./admin-button";
 import LoginButton from "./login-button";
 
 export default function Header() {
@@ -65,13 +66,7 @@ export default function Header() {
           >
             Products
           </Link>
-          <Link
-            href="/admin"
-            data-cy="admin-link"
-            className="text-[#ece4d8] hover:underline underline-offset-3 decoration-2 decoration-[#ece4d8]"
-          >
-            Admin
-          </Link>
+          <AdminButton />
           <Link
             href="/checkout"
             data-cy="cart-link"
