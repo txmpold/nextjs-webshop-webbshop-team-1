@@ -46,7 +46,7 @@ export default async function ProductDetailPage({
               slug={product.slug}
               buttonText="Add to Cart"
               variant="default"
-              className="px-5 py-6 mb-10 mt-2 bg-[#ddd9cd] text-black rounded-xl hover:bg-[#8b0836] hover:text-white  transition-all duration-300 cursor-pointer"
+              className="px-5 py-6 mb-10 mt-2 font-bold bg-[#2f2f2f] text-[#ece4d8] rounded-xl hover:bg-[#ece4d8] hover:text-[#2f2f2f]  transition-all duration-300 cursor-pointer"
             />
 
             <DetailPageDropdown
