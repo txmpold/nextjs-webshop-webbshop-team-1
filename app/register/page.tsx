@@ -1,10 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signUp, signIn } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
@@ -21,7 +27,9 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">(
+    "idle",
+  );
   const router = useRouter();
 
   const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
@@ -39,10 +47,8 @@ export default function RegisterPage() {
     try {
       await signUp.email({ name, email, password });
 
-     
       setStatus("success");
 
-      
       await signIn.email({ email, password });
 
       setTimeout(() => {
@@ -72,7 +78,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="flex justify-center items-center translate-y-[35%] h-auto">
+    <main className="flex justify-center py-[10%]">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Become a member!</CardTitle>
@@ -117,7 +123,11 @@ export default function RegisterPage() {
 
             {error && <p className="text-sm text-red-500">{error}</p>}
 
-            <Button type="submit" className="w-full cursor-pointer bg-[#2f2f2f] text-[#ece4d8] hover:bg-[#ece4d8] hover:text-[#2f2f2f] transition-all duration-300" disabled={status === "submitting"}>
+            <Button
+              type="submit"
+              className="w-full cursor-pointer bg-[#2f2f2f] text-[#ece4d8] hover:bg-[#ece4d8] hover:text-[#2f2f2f] transition-all duration-300"
+              disabled={status === "submitting"}
+            >
               {status === "submitting" ? "Creating account..." : "Register"}
             </Button>
           </form>
