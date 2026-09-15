@@ -46,24 +46,21 @@ export default async function ProductDetailPage({
               slug={product.slug}
               buttonText="Add to Cart"
               variant="default"
-              className="px-5 py-6 mb-10 mt-2 bg-[#ddd9cd] text-black rounded-xl hover:bg-[#8b0836] hover:text-white  transition-all duration-300 cursor-pointer"
+              className="px-5 py-6 mb-10 mt-2 font-bold bg-[#2f2f2f] text-[#ece4d8] rounded-xl hover:bg-[#ece4d8] hover:text-[#2f2f2f]  transition-all duration-300 cursor-pointer"
             />
 
             <DetailPageDropdown
               title="Shipping"
-              content="We aim to dispatch all orders within 24 business hours. Worn Stories offers UPS and Postnord shipping services.\nThe shipping service and cost is based on your selected location. We offer free shipping worldwide on all orders over 250€."
+              content="We aim to dispatch all orders within 24 business hours. Kassetten offers UPS and Postnord shipping services.\nThe shipping service and cost is based on your selected location. We offer free shipping worldwide on all orders over 500kr."
             />
             <DetailPageDropdown
               title="Returns"
-              content="Worn Stories has a 14-day return policy: you have 14 days from
+              content="Kassetten has a 14-day return policy: you have 14 days from
               when your order is delivered to ship it back to us for a refund or
               exchange.​ The order must be returned in original condition with
               included original packaging."
             />
-            <DetailPageDropdown
-              title="Care for your vintage items"
-              content="You can machine wash most cotton & cotton blend products in 40 degrees celcius / 104 degrees fahrenheit. Wool products should preferably be hand washed. Machine wash at your own risk. Remember that the items we offer have been used previously and that some are more fragile (depending on age and condition). Always have that in mind before washing. Vintage leather products should hang in dry areas and should be conditioned regularly to avoid cracks. Note that we do not take responsibility for any product that got damaged when worn or washed."
-            />
+
             <p className="text-xs text-gray-500" data-cy="product-id">
               Article number: {product.articleNumber}
             </p>
