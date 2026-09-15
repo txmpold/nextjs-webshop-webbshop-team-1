@@ -1,7 +1,5 @@
 "use client";
 import Link from "next/link";
-import { FiFacebook, FiInstagram, FiLinkedin } from "react-icons/fi";
-import { Separator } from "./ui/separator";
 
 export default function Footer() {
   return (
@@ -71,19 +69,6 @@ export default function Footer() {
           </Link>
         </section>
       </footer>
-      <Separator className="bg-[#2f2f2f]" />
-      <section className="flex gap-4 justify-center text-2xl m-8">
-        <Link href="#" className="text-[#ede7da]">
-          <FiFacebook />
-        </Link>
-        <Link href="#" className="text-[#ede7da]">
-          <FiInstagram />
-        </Link>
-        <Link href="#" className="text-[#ede7da]">
-          {" "}
-          <FiLinkedin />
-        </Link>
-      </section>
     </main>
   );
 }
