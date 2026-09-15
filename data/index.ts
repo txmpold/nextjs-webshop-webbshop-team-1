@@ -3,7 +3,6 @@
  * OBS: Kan utökas men inte ändras pga cypress.
  **/
 
-
 export type SeedCategory = {
   name: string;
   slug: string;
@@ -55,15 +54,14 @@ export const categories: SeedCategory[] = [
   },
 ];
 
-
-
 /* Lägg till era produkter här */
 export const products: SeedProduct[] = [
   {
     articleNumber: "GAME-1001",
     slug: "Super-Mario-Bros",
     title: "Super Mario Bros / Duck Hunt",
-    description: "Komplett i kartong med manual. Kartongen har lätt hyllslitage.",
+    description:
+      "Komplett i kartong med manual. Kartongen har lätt hyllslitage.",
     image: "/assets/images/game-mario.jpg",
     price: 249,
     stock: 1,
@@ -144,7 +142,7 @@ export const products: SeedProduct[] = [
     categorySlugs: ["serietidningar"],
   },
   {
-    articleNumber: "SE-2002",
+    articleNumber: "SE-2003",
     slug: "batman-nr-201-1993",
     title: "Batman nr 201, 1993",
     description: "Fint skick för sin ålder. Lätt gulnade sidor.",
@@ -161,7 +159,8 @@ export const products: SeedProduct[] = [
     articleNumber: "PO-3001",
     slug: "star-wars-a-new-hope",
     title: "Star Wars: A New Hope Poster",
-    description: "Originalaffisch från biopremiären. Två små nålhål i överkant.",
+    description:
+      "Originalaffisch från biopremiären. Två små nålhål i överkant.",
     image: "/assets/images/poster-starwars.jpg",
     price: 450,
     stock: 1,
@@ -189,7 +188,8 @@ export const products: SeedProduct[] = [
     articleNumber: "PO-3003",
     slug: "my-neighbor-totoro",
     title: "My Neighbor Totoro",
-    description: "Följde med tidningen 1991. Räknas både som affisch och samlarobjekt.",
+    description:
+      "Följde med tidningen 1991. Räknas både som affisch och samlarobjekt.",
     image: "/assets/images/poster-totoro.jpg",
     price: 250,
     stock: 1,
