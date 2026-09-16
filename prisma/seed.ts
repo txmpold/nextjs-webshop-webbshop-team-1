@@ -2,8 +2,8 @@ import { categories, products } from "@/data";
 import { db } from "./db";
 import { auth } from "@/lib/auth";
 
-const ADMIN_EMAIL = "admin@wornstories.se";
-const ADMIN_PASSWORD = "admin12345";
+  const ADMIN_EMAIL = "admin@wornstories.se";
+  const ADMIN_PASSWORD = "admin12345";
 
 async function seedAdmin() {
   const existing = await db.user.findUnique({ where: { email: ADMIN_EMAIL } });

@@ -13,21 +13,37 @@ import { Plus } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth-server";
+import { z } from "zod";
+
+const idSchema = z.object({ id: z.string().min(1) });
 
 async function deleteProduct(formData: FormData) {
   "use server";
 
-  const id = formData.get("id") as string;
-  await db.product.deleteMany({ where: { id } });
+  await requireAdmin();
+
+  const result = idSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
+    return;
+  }
+  await db.product.deleteMany({ where: { id: result.data.id } });
   revalidatePath("/admin");
 }
 
 async function markOrderAsSent(formData: FormData) {
   "use server";
 
-  const id = formData.get("id") as string;
+  await requireAdmin();
+
+  const result = idSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
+    return;
+  }
+
   await db.order.update({
-    where: { id },
+    where: { id: result.data.id },
     data: { shipped: true },
   });
   revalidatePath("/admin");
