@@ -1,6 +1,7 @@
 import AddToCartButton from "@/components/add-to-cart-button";
 import DetailPageDropdown from "@/components/ui/detail-page-dropdown";
 import { db } from "@/prisma/db";
+import { cn } from "@/lib/utils";
 
 export default async function ProductDetailPage({
   params,
@@ -36,6 +37,15 @@ export default async function ProductDetailPage({
             <p className="text-xl font-semibold" data-cy="product-price">
               {product.price}kr
             </p>
+            <p
+              className={cn(
+              "text-sm font-medium",
+              product.stock > 0 ? "text-gray-600" : "text-red-600"
+            )}
+            data-cy="product-stock"
+>
+            {product.stock > 0 ? `${product.stock} left in stock` : "Out of stock"}
+          </p>
 
             <AddToCartButton
               id={product.id}
