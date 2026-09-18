@@ -1,7 +1,7 @@
-import ProductForm from "../product-form";
-import { db } from "@/prisma/db";
-import { requireAdmin } from "@/lib/auth-server";
 import { productSchema } from "@/data/form";
+import { requireAdmin } from "@/lib/auth-server";
+import { db } from "@/prisma/db";
+import ProductForm from "../product-form";
 
 async function createNewProduct(formData: FormData) {
   "use server";
@@ -50,7 +50,7 @@ export default async function NewProductPage() {
 
       <div className="hidden h-screen md:block">
         <img
-          src="/assets/images/image-new-productpage.jpg"
+          src="/assets/images/new-product.jpg"
           alt="Clothes in store"
           className="object-cover w-full h-full"
         />
