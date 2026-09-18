@@ -37,6 +37,14 @@ export async function createOrder(input: unknown) {
     };
   }
 
+  // Stoppar ordern om den inloggade användaren inte är kund
+  if (session.user.role !== "customer") {
+    return {
+      success: false,
+      error: "You must be logged in as a customer to place an order",
+    };
+  }
+
   // Validerar datan från checkout
   const result = createOrderSchema.safeParse(input);
 
@@ -44,7 +52,7 @@ export async function createOrder(input: unknown) {
     return {
       success: false,
       error: "Invalid order data",
-      issues: result.error.flatten(),
+      issues: z.flattenError(result.error),
     };
   }
 

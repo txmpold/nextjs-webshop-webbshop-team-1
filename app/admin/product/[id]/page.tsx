@@ -2,37 +2,39 @@
 import { db } from "@/prisma/db";
 import { revalidatePath } from "next/cache";
 import ProductForm from "../product-form";
+import { requireAdmin } from "@/lib/auth-server";
+import { productSchema } from "@/data/form";
 
 async function editProduct(formData: FormData) {
   "use server";
-  const id = formData.get("id") as string;
-  const title = formData.get("title")?.toString().trim() || "";
-  const price = Number(formData.get("price"));
-  const stockValue = formData.get("stock");
-  const stock = Number(stockValue);
-  const description = formData.get("description")?.toString().trim() || "";
-  const image = formData.get("image")?.toString().trim() || "";
-  const category = formData.get("category")?.toString().trim() || "";
-  const slug = formData.get("slug")?.toString().trim() || "";
 
-  if (typeof stockValue !== "string" || stockValue.trim() === "" || !Number.isInteger(stock) || stock < 0) {
+  await requireAdmin();
+
+  const result = productSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
+    return;
+  }
+
+  const data = result.data;
+
+  if (!data.id) {
     return;
   }
 
   await db.product.update({
-    where: { id },
+    where: { id: data.id },
     data: {
-      title,
-      price,
-      description,
-      image,
-      category,
-      stock,
+      title: data.title,
+      description: data.description,
+      image: data.image,
+      category: data.category ?? "",
+      price: Number(data.price),
+      stock: Number(data.stock),
     },
   });
 
   revalidatePath("/admin");
-  return;
 }
 
 export default async function EditProductPage({
@@ -40,6 +42,7 @@ export default async function EditProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireAdmin();
   const { id } = await params;
   const product = await db.product.findUnique({
     where: { articleNumber: id },

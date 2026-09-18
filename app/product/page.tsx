@@ -34,7 +34,7 @@ export default async function ProductPage({
                 !params.category ? "font-bold" : ""
               }`}
             >
-              ALLA
+              ALL
             </Link>
           </li>
           {categories.map((category) => (
@@ -67,4 +67,3 @@ export default async function ProductPage({
     </main>
   );
 }
-

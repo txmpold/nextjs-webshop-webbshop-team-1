@@ -5,81 +5,81 @@ import { Separator } from "./ui/separator";
 
 export default function Footer() {
   return (
-    <main className="bg-[#f5efe6]">
-      <footer className="grid grid-cols-3 text-xs mx-auto items-center justify-between p-4 border-t-26 border-rose-900 px-6 py-8 justify-items-center pt-12 pb-12">
+    <main className="bg-[#2f2f2f]">
+      <footer className="grid grid-cols-3 text-xs mx-auto items-center justify-between p-4 border-t-26 border-[#b8342a] px-6 py-8 justify-items-center pt-12 pb-12 bg-[#2f2f2f]">
         <section className="grid gap-6">
-          <h2 className="font-bold mb-4">"Brand"</h2>
+          <h2 className="text-[#ede7da] font-bold mb-4">"Brand"</h2>
           <Link
             href="/aboutus"
-            className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+            className="text-[#ede7da] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
           >
             About Us
           </Link>
           <Link
             href="/sustainability"
-            className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+            className="text-[#ede7da] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
           >
             Sustainability
           </Link>
           <Link
             href="/careers"
-            className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+            className="text-[#ede7da] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
           >
             Careers
           </Link>
         </section>
         <section className="grid gap-6">
-          <h2 className="font-bold mb-4">Discover</h2>
+          <h2 className="text-[#ede7da] font-bold mb-4">Discover</h2>
           <Link
             href="/howitworks"
-            className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+            className="text-[#ede7da] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
           >
             How it works
           </Link>
           <Link
             href="/verification"
-            className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+            className="text-[#ede7da] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
           >
             Verification
           </Link>
           <Link
-            href="/signup"
-            className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+            href="/register"
+            className="text-[#ede7da] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
           >
             Sign Up
           </Link>
         </section>
         <section className="grid gap-6">
-          <h2 className="font-bold mb-4">Help</h2>
+          <h2 className="text-[#ede7da] font-bold mb-4">Help</h2>
           <Link
             href="/delivery"
-            className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+            className="text-[#ede7da] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
           >
             Delivery
           </Link>
           <Link
             href="/returnpolicy"
-            className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+            className="text-[#ede7da] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
           >
             Return Policy
           </Link>
           <Link
             href="/contactus"
-            className="text-zinc-600 hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
+            className="text-[#ede7da] hover:underline underline-offset-8 decoration-2 decoration-zinc-500"
           >
             Contact Us
           </Link>
         </section>
       </footer>
-      <Separator className="bg-stone-400" />
+      <Separator className="bg-[#2f2f2f]" />
       <section className="flex gap-4 justify-center text-2xl m-8">
-        <Link href="#">
+        <Link href="#" className="text-[#ede7da]">
           <FiFacebook />
         </Link>
-        <Link href="#">
+        <Link href="#" className="text-[#ede7da]">
           <FiInstagram />
         </Link>
-        <Link href="#">
+        <Link href="#" className="text-[#ede7da]">
           {" "}
           <FiLinkedin />
         </Link>

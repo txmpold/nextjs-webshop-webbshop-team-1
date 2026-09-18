@@ -11,26 +11,33 @@ export default async function Home() {
 
   return (
     <main className="grid gap-8 place-items-center">
-      <section className="relative md:w-full lg:w-full overflow-hidden">
-        <h1 className="absolute hidden md:flex justify-center w-full text-center text-[8rem] font-bold text-white top-15">
-          Every Item <br />
-          Tells A Story
-        </h1>
-        <img
-          src="/assets/images/greeter.jpg"
-          alt="Greeter"
-          className="md:object-cover lg:object-cover overflow-hidden w-full md:h-240 lg:h-240"
+      <section className="relative w-full overflow-hidden bg-[#2f2f2f] flex justify-center h-150 lg:h-220">
+        <video
+          src="/assets/videos/gameboy.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="relative aspect-square w-full max-w-xl top-[-20] lg:top-[-150] md:h-240"
         />
-        <button className="absolute py-3 px-10 rounded-lg text-white font-bold bg-[#8b0836] lg:bottom-50 left-1/2 -translate-x-1/2 translate-y-1/2 hover:cursor-pointer hover:bg-[#ddd9cd] hover:text-black transition-all duration-300">
+
+        <h1 className="absolute top-0 lg:top-75 left-1/2 -translate-x-1/2 text-[#EDE7DA] font-extrabold text-4xl lg:text-8xl text-center tracking-tight drop-shadow-lg select-none">
+          PLAY LIKE IT'S 1989.
+        </h1>
+        <button className="absolute py-3 px-10 rounded-lg text-white font-bold bg-[#b8342a] bottom-20 lg:bottom-40 left-1/2 -translate-x-1/2 translate-y-1/2 hover:cursor-pointer hover:bg-black transition-all duration-300">
           <Link href="/product" className="text-lg">
             Shop Now
           </Link>
         </button>
       </section>
       <h2 className="text-2xl md:text-4xl md:p-4">Shop by Category</h2>
-      <section className="w-full flex justify-evenly gap-8 overflow-x-auto p-2">
+      <section className="grid w-full grid-cols-1 gap-8 p-2 sm:grid-cols-2 lg:grid-cols-4">
         {categories.map((category) => (
-          <Link href={`/product?category=${category.slug}`} key={category.id}>
+          <Link
+            href={`/product?category=${category.slug}`}
+            key={category.id}
+            className="min-w-0"
+          >
             <CategoryCard category={category.name} image={category.image} />
           </Link>
         ))}

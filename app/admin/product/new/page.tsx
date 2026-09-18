@@ -1,36 +1,46 @@
 import ProductForm from "../product-form";
 import { db } from "@/prisma/db";
+import { requireAdmin } from "@/lib/auth-server";
+import { productSchema } from "@/data/form";
 
 async function createNewProduct(formData: FormData) {
-  "use server"
+  "use server";
 
-  const title = formData.get("title") as string;
-  const price = Number(formData.get("price"));
-  const stockValue = formData.get("stock");
-  const stock = Number(stockValue);
+  await requireAdmin();
 
-  if (!title || !price || price <= 0) {
+  const result = productSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
     return;
   }
-  if (typeof stockValue !== "string" || stockValue.trim() === "" || !Number.isInteger(stock) || stock < 0) {
-    return;
-  }
-  const description = formData.get("description") as string;
-  const image = formData.get("image") as string;
-  const articleNumberValue = Number(formData.get("articleNumber"));
-  const articleNumber = (articleNumberValue > 0 ? articleNumberValue : Math.floor(Math.random() * 10000)).toString();
-  const slug = `${title.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`;
+
+  const data = result.data;
+
+  const price = Number(data.price);
+  const stock = Number(data.stock);
+
+  const articleNumber =
+    data.articleNumber && data.articleNumber.trim() !== ""
+      ? data.articleNumber.trim()
+      : Math.floor(Math.random() * 10000).toString();
+
+  const slug = `${data.title.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`;
 
   await db.product.create({
     data: {
-      title, price, description, image, slug, articleNumber, stock
+      title: data.title,
+      description: data.description,
+      image: data.image,
+      price,
+      stock,
+      slug,
+      articleNumber,
     },
   });
-
-  return;
 }
 
-export default function NewProductPage() {
+export default async function NewProductPage() {
+  await requireAdmin();
 
   return (
     <main className="min-h-screen grid bg-muted/30 md:grid-cols-2">
@@ -39,8 +49,12 @@ export default function NewProductPage() {
       </div>
 
       <div className="hidden h-screen md:block">
-        <img src="/assets/images/image-new-productpage.jpg" alt="Clothes in store" className="object-cover w-full h-full" />
+        <img
+          src="/assets/images/image-new-productpage.jpg"
+          alt="Clothes in store"
+          className="object-cover w-full h-full"
+        />
       </div>
     </main>
-  )
+  );
 }

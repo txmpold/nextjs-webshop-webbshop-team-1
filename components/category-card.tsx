@@ -6,7 +6,7 @@ export interface CategoryCardProps {
 
 export function CategoryCard({ category, image }: CategoryCardProps) {
   return (
-    <Card className="relative mx-auto w-full min-w-84 pt-0 hover:bg-stone-100">
+    <Card className="relative h-full w-full min-w-0 pt-0 bg-[#2f2f2f] hover:bg-[#4f4f4f] transition-all duration-300">
       <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
       {image && (
         <img
@@ -16,7 +16,7 @@ export function CategoryCard({ category, image }: CategoryCardProps) {
         />
       )}
       <CardHeader className="text-center">
-        <CardTitle>{category}</CardTitle>
+        <CardTitle className="text-[#ede7da]">{category}</CardTitle>
       </CardHeader>
     </Card>
   );
