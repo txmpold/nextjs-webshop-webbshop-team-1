@@ -1,49 +1,42 @@
 import ProductForm from "../product-form";
 import { db } from "@/prisma/db";
 import { requireAdmin } from "@/lib/auth-server";
+import { productSchema } from "@/data/form";
 
 async function createNewProduct(formData: FormData) {
   "use server";
 
-  const title = formData.get("title") as string;
-  const price = Number(formData.get("price"));
-  const stockValue = formData.get("stock");
-  const stock = Number(stockValue);
+  await requireAdmin();
 
-  if (!title || !price || price <= 0) {
+  const result = productSchema.safeParse(Object.fromEntries(formData));
+
+  if (!result.success) {
     return;
   }
-  if (
-    typeof stockValue !== "string" ||
-    stockValue.trim() === "" ||
-    !Number.isInteger(stock) ||
-    stock < 0
-  ) {
-    return;
-  }
-  const description = formData.get("description") as string;
-  const image = formData.get("image") as string;
-  const articleNumberValue = Number(formData.get("articleNumber"));
-  const articleNumber = (
-    articleNumberValue > 0
-      ? articleNumberValue
-      : Math.floor(Math.random() * 10000)
-  ).toString();
-  const slug = `${title.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`;
+
+  const data = result.data;
+
+  const price = Number(data.price);
+  const stock = Number(data.stock);
+
+  const articleNumber =
+    data.articleNumber && data.articleNumber.trim() !== ""
+      ? data.articleNumber.trim()
+      : Math.floor(Math.random() * 10000).toString();
+
+  const slug = `${data.title.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`;
 
   await db.product.create({
     data: {
-      title,
+      title: data.title,
+      description: data.description,
+      image: data.image,
       price,
-      description,
-      image,
+      stock,
       slug,
       articleNumber,
-      stock,
     },
   });
-
-  return;
 }
 
 export default async function NewProductPage() {
